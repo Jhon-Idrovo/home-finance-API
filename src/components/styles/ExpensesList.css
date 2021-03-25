@@ -1,0 +1,13 @@
+table {
+  table-layout: auto;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+
+td,
+th {
+  border: lightseagreen;
+  border-style: solid;
+  border-block-width: 2px;
+}

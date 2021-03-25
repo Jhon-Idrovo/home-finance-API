@@ -1,38 +1,103 @@
-.App {
-  text-align: center;
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Montserrat", sans-serif;
+  background-color: rgba(154, 150, 187, 0.863);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.logo {
+  color: antiquewhite;
+  font-size: x-large;
+  margin: 2%;
+  font-weight: bold;
+}
+nav {
+  background-color: rgba(36, 25, 133, 0.808);
+  width: 100%;
+  display: block;
+
+  border-width: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  height: 2rem;
+
+  border: red ridge;
+  border-width: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+li {
+  border: double;
+  display: flex;
+
+  border-width: 0;
+}
+nav ul li a {
+  color: whitesmoke;
+  border-radius: 5px 5px 0 0;
+  padding: 5px;
+  border-width: 0;
+}
+
+a.active,
+a:hover {
+  background-color: rgb(165, 161, 209);
+}
+
+.upper-active {
+  background-color: rgba(216, 213, 247, 0.822);
+  border-radius: 5px;
+}
+
+.upper-btn:hover {
+  background-color: rgba(216, 213, 247, 0.822);
+  border-radius: 5px;
+}
+
+#extras {
+  margin: 0.5vh;
+}
+
+#first-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* EXPENSES VIEWS */
+.message-container {
+  width: 100%;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.message-box {
+  background-color: rgba(216, 213, 247, 0.822);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.623),
+    0 6px 10px 0 rgba(0, 0, 0, 0.507);
+  border-radius: 5px;
+  max-width: 60%;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.message-header {
+  margin-bottom: 3%;
+}
+
+.message-box p {
+  text-align: center;
 }

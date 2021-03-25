@@ -1,0 +1,7 @@
+.exp-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 40% 40% 20%;
+
+  border: double;
+}
