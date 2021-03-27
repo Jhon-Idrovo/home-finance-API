@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
-import "./styles/login.css";
 import axiosInstance from "../axios";
 
-function Login() {
+function Login({ isLoged, setIsLoged }) {
   const history = useHistory();
   const url = "/api/token/";
   const initialState = Object.freeze({
@@ -24,17 +23,20 @@ function Login() {
       if (response.status === 200) {
         const data = response.data;
         console.log(typeof data);
-        localStorage.setItem("acces_token", data["access"]);
+        console.log(data);
+        localStorage.setItem("access_token", data["access"]);
         localStorage.setItem("refresh_token", data["refresh"]);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + data["access"];
+        setIsLoged(true);
         history.push("/create-expense/");
       }
     });
   };
   return (
-    <div id="login-container">
-      <form id="login-form">
+    <div className="form-container">
+      <form className="form">
+        <h3 className="form-title">INGRESO</h3>
         <input
           type="text"
           name="username"
@@ -52,11 +54,11 @@ function Login() {
         <input
           type="submit"
           value="Ingresar"
-          id="submit-btn"
+          className="submit-btn"
           onClick={handleSubmit}
         />
         <p>
-          No tienes una cuenta? <a href="/register/">Registrate aquí</a>{" "}
+          No tienes una cuenta? <Link to="/register">Registrate aquí</Link>
         </p>
       </form>
     </div>

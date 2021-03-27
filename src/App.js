@@ -10,26 +10,14 @@ import Register from "./components/Register";
 import ExpensesList from "./components/ExpensesList";
 import { useState, useEffect } from "react";
 import DataLoading from "./components/DataLoading";
+import Logout from "./components/Logout";
 import Login from "./components/Login";
 import CreateExp from "./components/CreateExp";
+import Statistics from "./components/Statistics";
 import axiosInstance from "./axios";
 
 function App() {
-  //HOC, returns a function component that renders its argument
-  const ExpLoading = DataLoading(ExpensesList);
-
-  const [appState, setAppState] = useState({
-    loading: false,
-    expenses: null,
-  });
-
-  useEffect(() => {
-    setAppState({ loading: true });
-    axiosInstance
-      .get("stats/api/")
-      .then((response) => response.json())
-      .then((data) => setAppState({ loading: false, expenses: data }));
-  }, [setAppState]);
+  const [isLoged, setIsLoged] = useState(false);
 
   return (
     <Router>
@@ -38,13 +26,23 @@ function App() {
           <label className="logo">Home Finance</label>
           <ul id="extras">
             <li className="list-item">
-              <NavLink
-                to="/login"
-                className="upper-btn"
-                activeClassName="upper-active"
-              >
-                Login
-              </NavLink>
+              {!isLoged ? (
+                <NavLink
+                  to="/login"
+                  className="upper-btn"
+                  activeClassName="upper-active"
+                >
+                  Login
+                </NavLink>
+              ) : (
+                <NavLink
+                  to="/logout"
+                  className="upper-btn"
+                  activeClassName="upper-active"
+                >
+                  Logout
+                </NavLink>
+              )}
             </li>
             <li className="list-item">
               <NavLink
@@ -59,7 +57,7 @@ function App() {
         </div>
         <ul>
           <li className="list-item">
-            <NavLink to="create-expense/">Registrar Gasto</NavLink>
+            <NavLink to="/create-expense">Registrar Gasto</NavLink>
           </li>
           <li className="list-item">
             <NavLink to="/statistics">Estadísticas</NavLink>
@@ -71,17 +69,22 @@ function App() {
       </nav>
       <Switch>
         <Route path="/create-expense">
-          <CreateExp />
+          <CreateExp isLoged={isLoged} />
         </Route>
-        <Route path="/statistics"></Route>
+        <Route path="/statistics">
+          <Statistics isLoged={isLoged} />
+        </Route>
         <Route path="/book">
-          <ExpensesList />
+          <ExpensesList isLoged={isLoged} />
         </Route>
         <Route path="/login">
-          <Login />
+          <Login isLoged={isLoged} setIsLoged={setIsLoged} />
         </Route>
         <Route path="/register">
           <Register />
+        </Route>
+        <Route path="/logout">
+          <Logout isLoged={isLoged} setIsLoged={setIsLoged} />
         </Route>
       </Switch>
     </Router>

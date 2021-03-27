@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, Link } from "react-router-dom";
 import axiosInstance from "../axios";
 
 function Register() {
@@ -27,21 +27,10 @@ function Register() {
         console.log(err);
       });
   };
-  // 0: "length"
-  // 1: "action"
-  // 2: "location"
-  // 3: "createHref"
-  // 4: "push"
-  // 5: "replace"
-  // 6: "go"
-  // 7: "goBack"
-  // 8: "goForward"
-  // 9: "block"
-  // 10: "listen"
   return (
-    <div id="login-container">
-      <form>
-        <h4>Registrate</h4>
+    <div className="form-container">
+      <form className="form">
+        <h3 className="form-title">REGISTRO</h3>
 
         <input
           type="text"
@@ -60,11 +49,11 @@ function Register() {
         <input
           type="submit"
           value="Crear Cuenta"
-          id="submit-btn"
+          className="submit-btn"
           onClick={handleSubmit}
         />
         <p>
-          Ya tienes una cuenta? <a href="/login/">Ingresa aquí</a>
+          Ya tienes una cuenta? <Link to="/login">Ingresa aquí</Link>
         </p>
       </form>
     </div>

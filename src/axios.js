@@ -28,35 +28,39 @@ axiosInstance.interceptors.response.use(
       );
       return Promise.reject(error);
     }
-
+    //if the refresh token has expired redirect to login
     if (
       error.response.status === 401 &&
-      originalRequest.url === baseURL + "token/refresh/"
+      originalRequest.url === baseURL + "/api/token/refresh/"
     ) {
       window.location.href = "/login/";
       return Promise.reject(error);
     }
 
+    //if the access token has expired
     if (
       error.response.data.code === "token_not_valid" &&
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
+      console.log("making a new refresh token");
       const refreshToken = localStorage.getItem("refresh_token");
 
       if (refreshToken) {
-        const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));
+        const tokenParts = JSON.parse(
+          Buffer.from(refreshToken.split(".")[1], "base64").toString()
+        );
 
         // exp date in token is expressed in seconds, while now() returns milliseconds:
         const now = Math.ceil(Date.now() / 1000);
-        console.log(tokenParts.exp);
 
         if (tokenParts.exp > now) {
           return axiosInstance
-            .post("/token/refresh/", { refresh: refreshToken })
+            .post("/api/token/refresh/", { refresh: refreshToken })
             .then((response) => {
+              console.log(response.data);
               localStorage.setItem("access_token", response.data.access);
-              localStorage.setItem("refresh_token", response.data.refresh);
+              // localStorage.setItem("refresh_token", response.data.refresh);
 
               axiosInstance.defaults.headers["Authorization"] =
                 "JWT " + response.data.access;

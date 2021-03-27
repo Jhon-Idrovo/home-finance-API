@@ -1,7 +1,49 @@
 .exp-container {
   width: 100%;
-  display: grid;
-  grid-template-columns: 40% 40% 20%;
+}
 
-  border: double;
+.table-headers {
+  border: none;
+  border-bottom: solid 3px;
+}
+
+.type-entry,
+.description-entry,
+.amount-entry {
+  width: 40vw;
+  border: none;
+  border-bottom: solid 3px rgba(107, 66, 255, 0.589);
+  padding: 1% 0.5%;
+}
+
+.type-entry input,
+.description-entry input,
+.amount-entry input {
+  border-radius: 3px;
+  border: none;
+  height: 4vh;
+  text-align: justify;
+  width: 100%;
+}
+
+.amount-entry {
+  width: 20vw;
+}
+
+.exp-submit-btn {
+  width: 50%;
+  height: 2rem;
+  margin-top: 2rem;
+}
+
+#submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#add-btn {
+  padding: 2%;
+  text-align: center;
 }

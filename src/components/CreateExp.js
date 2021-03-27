@@ -1,71 +1,46 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
+import LogNeeded from "./LogNeeded";
 import ExpRow from "./ExpRow";
 import "./styles/CreateExp.css";
 import axiosInstance from "../axios";
 
-let numRows = 1;
-
-const baseExpense = [
-  {
-    name: "exp-1",
-    exp_type: "",
-    description: "",
-    amount: 0,
-  },
-];
-function CreateExp() {
-  const [expenses, setExpenses] = useState(baseExpense);
+const baseExpense = {
+  expType: "",
+  description: "",
+  amount: "",
+};
+function CreateExp({ isLoged }) {
+  const [expenses, setExpenses] = useState([
+    JSON.parse(JSON.stringify(baseExpense)),
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.parentNode);
+    console.log(expenses);
+    axiosInstance
+      .post("api/save-expenses/", expenses)
+      .then((res) => console.log(res));
+    setExpenses([{ ...baseExpense }]);
+    console.log(expenses);
   };
 
   const addRow = (e) => {
     e.preventDefault();
-    numRows++;
-    const newType = document.getElementById("type-1").cloneNode(true);
-    newType.setAttribute("id", "type-" + numRows);
-    newType.setAttribute("name", "type-" + numRows);
-    newType.oninput = adjustDescription;
-
-    const newDescription = document
-      .getElementById("description-1")
-      .cloneNode(false);
-    newDescription.setAttribute("id", "description-" + numRows);
-    newDescription.setAttribute("name", "description-" + numRows);
-
-    const newAmount = document.getElementById("amount-1").cloneNode(false);
-    newAmount.setAttribute("id", "amount-" + numRows);
-    newAmount.setAttribute("name", "amount-" + numRows);
-
-    const tdList = [newType, newDescription, newAmount];
-    const newRow = document.createElement("tr");
-
-    for (let i = 0; i < 3; i++) {
-      tdList[i].value = "";
-      const d1 = document.createElement("td");
-      d1.appendChild(tdList[i]);
-      newRow.appendChild(d1);
-    }
-    document.getElementById("table-body").appendChild(newRow);
+    setExpenses([...expenses, JSON.parse(JSON.stringify(baseExpense))]);
   };
 
-  function adjustDescription(e) {
-    let numRow = e.target.id;
-    console.log(numRow);
-    numRow = numRow.substring(numRow.indexOf("-") + 1);
-
-    document
-      .getElementById("description-" + numRow)
-      .setAttribute("list", e.target.value);
-  }
-
-  const handleChange = (e) => {
-    setExpenses([...expenses]);
+  const handleChange = (e, index, inputField) => {
+    console.log("handling change" + inputField + index);
+    let oldExp = Object.assign([], expenses);
+    console.log(oldExp);
+    oldExp[parseInt(index)][inputField] = e.target.value;
+    setExpenses(oldExp);
+    console.log(expenses);
   };
+
+  if (!isLoged) return <LogNeeded />;
   return (
     <div className="exp-container">
       <form id="expenses-form">
@@ -78,29 +53,31 @@ function CreateExp() {
             </tr>
           </thead>
           <tbody id="table-body">
-            <tr className="exp-row" id="tr-1">
-              <td className="exp-entry">
-                <input
-                  type="text"
-                  name="type-1"
-                  id="type-1"
-                  list="expensesList"
-                  onInput={adjustDescription}
+            {expenses.map((exp, index) => {
+              return (
+                <ExpRow
+                  handleChange={handleChange}
+                  exp={exp}
+                  key={index}
+                  index={index}
                 />
-              </td>
-              <td className="exp-entry">
-                <input type="text" name="description-1" id="description-1" />
-              </td>
-              <td className="exp-entry">
-                <input type="number" name="amount-1" id="amount-1" />
-              </td>
-            </tr>
+              );
+            })}
           </tbody>
           <tfoot>
-            <input type="submit" value="Guardar" onClick={handleSubmit} />
+            <button id="add-btn" onClick={addRow}>
+              Añadir entrada
+            </button>
           </tfoot>
         </table>
-        <button onClick={addRow}>Añadir entrada</button>
+        <div id="submit-container">
+          <input
+            type="submit"
+            value="Guardar"
+            onClick={handleSubmit}
+            className="exp-submit-btn"
+          />
+        </div>
       </form>
       <datalist id="expensesList">
         <option value="Alimentación" hidden></option>

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import LogNeeded from "./LogNeeded";
 import "./styles/ExpensesList.css";
 import Expense from "./Expense";
 import Loading from "./Loading";
@@ -6,25 +8,29 @@ import NoExpenses from "./NoExpenses";
 import Error from "./Error";
 import axiosInstance from "../axios";
 
-function ExpensesList() {
+function ExpensesList({ isLoged }) {
   const [expenses, setExpenses] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  axiosInstance
-    .get("api/all-expenses/")
-    .then((response) => {
-      console.log(response.data, response.data.length);
-      if (response.status === 200) {
-        setExpenses(response.data);
-        setIsLoading(false);
-      } else {
-        throw Error();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsLoading(false);
-    });
 
+  useEffect(() => {
+    axiosInstance
+      .get("api/all-expenses/")
+      .then((response) => {
+        console.log(response.data, response.data.length);
+        if (response.status === 200) {
+          setExpenses(response.data);
+          setIsLoading(false);
+        } else {
+          throw Error();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (!isLoged) return <LogNeeded />;
   if (isLoading) return <Loading />;
 
   try {

@@ -1,16 +1,36 @@
 import React from "react";
 
-function ExpRow() {
+function ExpRow({ handleChange, exp, index }) {
   return (
     <tr className="exp-row">
-      <td className="exp-entry">
-        <input type="text" name="type" id="type" />
+      <td className="type-entry">
+        <input
+          type="text"
+          list="expensesList"
+          onChange={(e) => handleChange(e, e.target.name, "expType")}
+          value={exp.expType}
+          placeholder="Tipo"
+          name={index}
+        />
       </td>
-      <td className="exp-entry">
-        <input type="text" name="description" id="description" />
+      <td className="description-entry">
+        <input
+          type="text"
+          value={exp.description}
+          onChange={(e) => handleChange(e, e.target.name, "description")}
+          placeholder="Descripción"
+          name={index}
+          list={exp.expType}
+        />
       </td>
-      <td className="exp-entry">
-        <input type="number" name="amount" id="amount" />
+      <td className="amount-entry">
+        <input
+          type="number"
+          value={exp.amount}
+          onChange={(e) => handleChange(e, e.target.name, "amount")}
+          placeholder="0.00"
+          name={index}
+        />
       </td>
     </tr>
   );

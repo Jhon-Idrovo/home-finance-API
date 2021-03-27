@@ -8,7 +8,7 @@
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-family: "Montserrat", sans-serif;
-  background-color: rgba(154, 150, 187, 0.863);
+  background-color: rgb(206, 203, 235);
 }
 
 .logo {
@@ -18,7 +18,7 @@ body {
   font-weight: bold;
 }
 nav {
-  background-color: rgba(36, 25, 133, 0.808);
+  background-color: rgb(245, 102, 102);
   width: 100%;
   display: block;
 
@@ -29,16 +29,10 @@ nav ul {
   display: flex;
   justify-content: space-around;
   height: 2rem;
-
-  border: red ridge;
-  border-width: 0;
 }
 
 li {
-  border: double;
   display: flex;
-
-  border-width: 0;
 }
 nav ul li a {
   color: whitesmoke;
@@ -49,16 +43,16 @@ nav ul li a {
 
 a.active,
 a:hover {
-  background-color: rgb(165, 161, 209);
+  background-color: rgb(206, 203, 235);
 }
 
 .upper-active {
-  background-color: rgba(216, 213, 247, 0.822);
+  background-color: rgb(206, 203, 235);
   border-radius: 5px;
 }
 
 .upper-btn:hover {
-  background-color: rgba(216, 213, 247, 0.822);
+  background-color: rgb(206, 203, 235);
   border-radius: 5px;
 }
 
@@ -74,7 +68,7 @@ a:hover {
 /* EXPENSES VIEWS */
 .message-container {
   width: 100%;
-  height: 70vh;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +76,7 @@ a:hover {
 }
 
 .message-box {
-  background-color: rgba(216, 213, 247, 0.822);
+  background-color: rgba(245, 244, 247, 0.822);
   box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.623),
     0 6px 10px 0 rgba(0, 0, 0, 0.507);
   border-radius: 5px;
@@ -100,4 +94,49 @@ a:hover {
 
 .message-box p {
   text-align: center;
+}
+
+/* FORM STYLING */
+
+.form-container {
+  margin: 0;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 2px;
+  background-color: rgba(228, 226, 255, 0.877);
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.623),
+    0 6px 10px 0 rgba(0, 0, 0, 0.507);
+  padding: 5%;
+}
+
+.form input {
+  display: block;
+  border-radius: 5px;
+  border: none;
+  height: 5vh;
+  margin: 3%;
+  font-family: "Montserrat", sans-serif;
+  padding: 1.5rem;
+  outline-color: rgba(137, 43, 226, 0.13);
+}
+
+.form-title {
+  margin-bottom: 3%;
+}
+
+.submit-btn:hover {
+  background-color: rgba(36, 25, 133, 0.808);
+}
+
+.form p {
+  margin-top: 5%;
 }
