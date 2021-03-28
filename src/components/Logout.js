@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import axiosInstance from "../axios";
 
-function Logout({ isLoged, setIsLoged }) {
+function Logout({ setIsLoged }) {
   const history = useHistory();
   const refreshToken = localStorage.getItem("refresh_token");
   useEffect(() => {

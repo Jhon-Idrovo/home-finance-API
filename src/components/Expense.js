@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./styles/Expense.css";
-
-const EXP_TYPES = [];
-const EXP_DESC = [];
 
 function Expense({ exp }) {
   return (

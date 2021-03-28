@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 import axiosInstance from "../axios";
@@ -18,12 +18,11 @@ function Login({ isLoged, setIsLoged }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+
     axiosInstance.post(url, form).then((response) => {
       if (response.status === 200) {
         const data = response.data;
-        console.log(typeof data);
-        console.log(data);
+
         localStorage.setItem("access_token", data["access"]);
         localStorage.setItem("refresh_token", data["refresh"]);
         axiosInstance.defaults.headers["Authorization"] =

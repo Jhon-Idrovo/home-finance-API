@@ -16,7 +16,6 @@ function ExpensesList({ isLoged }) {
     axiosInstance
       .get("api/all-expenses/")
       .then((response) => {
-        console.log(response.data, response.data.length);
         if (response.status === 200) {
           setExpenses(response.data);
           setIsLoading(false);
@@ -61,18 +60,3 @@ function ExpensesList({ isLoged }) {
 }
 
 export default ExpensesList;
-
-// return (
-//     <div id="exp-container">
-//       {expList.map((exp) => {
-//         return (
-//           <>
-//             <div>{exp.date}</div>
-//             <div>{exp.exp_type}</div>
-//             <div>{exp.description}</div>
-//             <div>{exp.amount}</div>
-//           </>
-//         );
-//       })}
-//     </div>
-//   );

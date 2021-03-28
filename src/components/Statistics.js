@@ -4,6 +4,7 @@ import { Doughnut, Bar, Line } from "react-chartjs-2";
 
 import axiosInstance from "../axios";
 import LogNeeded from "./LogNeeded";
+import "./styles/Stats.css";
 
 const options = {
   scales: {
@@ -20,29 +21,84 @@ const options = {
   },
 };
 
+let [month, date, year] = new Date().toLocaleDateString("en-US").split("/");
+
 function Statistics({ isLoged }) {
   const [data, setData] = useState(null);
+  const [timeFrame, setTimeFrame] = useState({
+    init: `${year - 1}-${month < 10 ? "0" + month : month}-${
+      date < 10 ? "0" + date : date
+    }`,
+    end: `${year}-${month < 10 ? "0" + month : month}-${
+      date < 10 ? "0" + date : date
+    }`,
+  });
+
   useEffect(() => {
-    axiosInstance.post("api/statistics/", { timeFrame: 6 }).then((response) => {
-      console.log(response.data);
+    submit();
+  }, []);
+
+  const submit = () => {
+    axiosInstance.post("api/statistics/", timeFrame).then((response) => {
       let resData = {
         labels: [1, 2, 3, 4, 5, 6, 7],
+        datasets: [],
       };
-      response.data.map((serie) => {
-        console.log(serie);
+      let series = response.data.series;
+      series.forEach((serie) => {
         serie.backgroundColor =
           "#" +
           ("00000" + ((Math.random() * (1 << 24)) | 0).toString(16)).slice(-6);
       });
-      resData.datasets = response.data;
-      console.log(resData);
+      resData.datasets = series;
+      resData.labels = response.data.labels;
       setData(resData);
     });
-  }, []);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    submit();
+  };
+
   if (!isLoged) return <LogNeeded />;
   return (
     <div>
       <Line data={data} options={options} />
+      <form className="stats-form">
+        <span id="dates-container">
+          <span className="date">
+            <label htmlFor="initial-date">Fecha Inicio</label>
+            <input
+              type="date"
+              name="initial"
+              id="initial-date"
+              value={timeFrame.init}
+              onChange={(e) => {
+                setTimeFrame({ ...timeFrame, init: e.target.value });
+              }}
+            />
+          </span>
+          <span className="date">
+            <label htmlFor="end-date">Fecha Final</label>
+            <input
+              type="date"
+              name="end"
+              id="end-date"
+              value={timeFrame.end}
+              onChange={(e) => {
+                setTimeFrame({ ...timeFrame, end: e.target.value });
+              }}
+            />
+          </span>
+        </span>
+        <input
+          type="submit"
+          value="Cargar"
+          onClick={handleSubmit}
+          id="submit-btn"
+        />
+      </form>
     </div>
   );
 }

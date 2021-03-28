@@ -34,6 +34,8 @@
   width: 50%;
   height: 2rem;
   margin-top: 2rem;
+  font-family: inherit;
+  border: none;
 }
 
 #submit-container {
@@ -44,6 +46,13 @@
 }
 
 #add-btn {
+  border: none;
+  font-family: inherit;
   padding: 2%;
   text-align: center;
+}
+
+#add-btn:hover,
+.exp-submit-btn:hover {
+  background-color: rgb(247, 174, 174);
 }

@@ -5,19 +5,18 @@ import {
   Switch,
   NavLink,
 } from "react-router-dom";
-import Expense from "./components/Expense";
 import Register from "./components/Register";
 import ExpensesList from "./components/ExpensesList";
-import { useState, useEffect } from "react";
-import DataLoading from "./components/DataLoading";
+import { useState } from "react";
 import Logout from "./components/Logout";
 import Login from "./components/Login";
 import CreateExp from "./components/CreateExp";
 import Statistics from "./components/Statistics";
-import axiosInstance from "./axios";
 
 function App() {
-  const [isLoged, setIsLoged] = useState(false);
+  const [isLoged, setIsLoged] = useState(
+    Boolean(localStorage.getItem("access_token"))
+  );
 
   return (
     <Router>
@@ -84,7 +83,7 @@ function App() {
           <Register />
         </Route>
         <Route path="/logout">
-          <Logout isLoged={isLoged} setIsLoged={setIsLoged} />
+          <Logout setIsLoged={setIsLoged} />
         </Route>
       </Switch>
     </Router>

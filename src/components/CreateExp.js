@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 
 import LogNeeded from "./LogNeeded";
 import ExpRow from "./ExpRow";
@@ -18,12 +17,18 @@ function CreateExp({ isLoged }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(expenses);
+
     axiosInstance
       .post("api/save-expenses/", expenses)
-      .then((res) => console.log(res));
-    setExpenses([{ ...baseExpense }]);
-    console.log(expenses);
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          setExpenses([{ ...baseExpense }]);
+        } else throw Error;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const addRow = (e) => {
@@ -66,7 +71,7 @@ function CreateExp({ isLoged }) {
           </tbody>
           <tfoot>
             <button id="add-btn" onClick={addRow}>
-              Añadir entrada
+              Añadir fila
             </button>
           </tfoot>
         </table>

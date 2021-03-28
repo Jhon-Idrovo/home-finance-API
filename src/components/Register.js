@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import axiosInstance from "../axios";
 
 function Register() {
@@ -16,7 +16,6 @@ function Register() {
   const handleSubmit = (e) => {
     const url = "api/register/";
     e.preventDefault();
-    console.log(form);
     axiosInstance
       .post(url, form)
       .then((response) => {
@@ -31,7 +30,13 @@ function Register() {
     <div className="form-container">
       <form className="form">
         <h3 className="form-title">REGISTRO</h3>
-
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email"
+          onChange={handleChange}
+        />
         <input
           type="text"
           name="username"

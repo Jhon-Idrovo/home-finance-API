@@ -1,0 +1,39 @@
+.stats-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.date {
+  display: inline-block;
+  width: min-content;
+  margin-right: 5%;
+}
+
+#dates-container {
+  display: contents;
+}
+
+.stats-form input {
+  border: none;
+  border-radius: 3px;
+  padding: 2%;
+  font-family: inherit;
+}
+
+#submit-btn {
+}
+
+#submit-btn:hover {
+  background-color: rgb(245, 102, 102);
+}
+
+@media only screen and (max-width: 499px) {
+  #dates-container {
+    width: min-content;
+  }
+  #submit-btn {
+    display: inline;
+    margin-top: 2%;
+  }
+}
